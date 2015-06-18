@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+
+function browse_elements(start, output_id) {
+    //get the element to browse
+    var elements = start.children;
+    var output = document.getElementById(output_id);    
+    for (var i = 0; i < elements.length; i++) {
+        output.innerHTML += "Found element:" + elements[i].tagName + " with id: " + elements[i].id + "<br />"
+        browse_elements(elements[i], output_id);
+    }
+document.getElementById('czysc').disabled = 0 
+}
+
+function add_elements(start, output_list) {
+   
+     //get the element to browse
+    var elements = start.children;
+   
+     //iterates through children
+    for (var i = 0; i < elements.length; i++) {
+
+        //create list item element
+        var li_element = document.createElement('li');
+
+        // create a text node
+        var text_element = document.createTextNode("Found element:" + elements[i].tagName +
+              " with id: " + elements[i].id);
+
+        // appedn text to li
+        li_element.appendChild(text_element);
+
+        // append li to output list
+        output_list.appendChild(li_element);
+
+        // go for recurency
+        add_elements(elements[i], output_list);
+    }
+  document.getElementById('czysc').disabled = 0 
+}
+   
+
+
+function clearall_elements(out_list, output){
+	 
+var list_1 =   document.getElementById('out_list')
+var list_2 =   document.getElementById('output')
+
+ 
+//when list has children
+ if(list_1.firstChild || list_2.firstChild){
+
+    while(list_1.hasChildNodes()) {   
+    list_1.removeChild(list_1.firstChild);
+
+    }
+  while(list_2.hasChildNodes()) {   
+    list_2.removeChild(list_2.firstChild);
+    }
+  }    
+document.getElementById('czysc').disabled = 1 
+  
+
+}
+</script>
+</head>
+<body>
+    <div id="first_chapter">
+        <h1 id="header">How to browse and modify the document</h1>
+        <p id="p1">First paragraph</p>
+        <p id="p2">Second paragraph</p>
+        <div>
+            <p id="p3">Here come a bit longer text</p>
+        </div>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+        </ul>        
+    </div>
+    
+   
+    <button onclick="browse_elements(document.getElementById('first_chapter'),'output');">Browse</button>
+    <button onclick="add_elements(document.getElementById('first_chapter'), document.getElementById('out_list'));">Add elements example</button>
+
+ 
+    <button id= 'czysc' onclick="clearall_elements( 'out_list', 'output');" disabled>Clear showed elements</button> 
+
+<div id="output"></div>
+
+    <ul id="out_list"></ul>
+
+</body>
+</html>
